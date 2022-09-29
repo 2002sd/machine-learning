@@ -1,0 +1,27 @@
+#编写函数计算auc值，传入两个参数：label和score
+def auc(label,score):       
+    label_new=list(label)
+    m_1=label_new.count('P')
+    m_2=label_new.count('N')#分别计算正例和负例的个数
+    x=[1]
+    y=[1]#从(1,1)点开始往(0,0)点计算roc中的点
+    for i in range(len(label_new)):
+        if label[i]=='P':
+            y.append(y[i]-1/(m_1))
+            x.append(x[i])
+        else:
+            x.append(x[i]-1/(m_2))
+            y.append(y[i])
+    auc=0
+    for j in range(len(x)-1):
+        auc+=0.5*(x[j]-x[j+1])*(y[j+1]+y[j])
+    return auc    
+**************************************************
+import pandas as pd
+data=pd.read_csv('D:\\Desktop\\机器学习\\testAUC_data.csv')#导入数据
+array=data.values[0::,0::]
+data = array[array[:,2].argsort()]#对数据排序
+label=data[:,1]
+score=data[:,2]#分别提取auc函数的两个参数
+#测试
+auc(label,score)
