@@ -25,3 +25,4 @@ label=data[:,1]
 score=data[:,2]#分别提取auc函数的两个参数
 #测试
 auc(label,score)
+##output：0.8333333333333334
